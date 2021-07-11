@@ -1,6 +1,7 @@
 package logic;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,22 +11,24 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
-
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FirstDeliverable {
 	
 	private static FileWriter fileWriter;
-	private static final String PROJNAME ="BOOKKEEPER";
+	private static final String PROJNAME ="STDCXX";
 	private static final Integer STEP = 1000;
+	private static final String path = "local path of STDCXX";
 	
 	private static String readAll(Reader rd) throws IOException {
 	      StringBuilder sb = new StringBuilder();
@@ -70,6 +73,7 @@ public class FirstDeliverable {
 				String truncateDate = resolutionDate.getYear()+"-"+resolutionDate.getMonthValue();
 
 				//put key and date into the map
+				if(checkCommit(key))
 				tickets.put(key, truncateDate);
 				
 			}
@@ -132,6 +136,30 @@ public class FirstDeliverable {
 		closeFile();
 		logger.log(Level.INFO,"File saved");
 	
+	}
+	
+	private static  boolean checkCommit(String ticket) throws GitAPIException {
+		Git git;
+		File localRepoFolder;
+		localRepoFolder = new File(path);
+		git = Git.open(localRepoFolder);
+		Iterable<RevCommit> commits = this.git.log().call();
+		
+		Iterator<RevCommit> itr = commits.iterator();
+		while (itr.hasNext()) {
+			RevCommit element = itr.next();
+			String comment = element.getFullMessage();
+
+			if (comment.contains(ticket+".") || comment.contains(ticket+":") 
+					|| comment.contains(ticket+" :")) {
+			
+				return true;
+			}
+			
+		}
+			
+		return false;
+		
 	}
 	
 	private static void prepareOutputFile(String fileName) throws IOException {
