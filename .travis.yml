@@ -8,6 +8,7 @@ jdk:
 addons: 
     sonarcloud: 
         organization: ilcontecvma
+        sonar.projectKey: IlConteCvma_Deliverable1
         token: 
             9475e750a99bc02e9099f01f6dbd282bd005c1d1
 
