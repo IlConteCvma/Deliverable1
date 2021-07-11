@@ -142,7 +142,7 @@ public class FirstDeliverable {
 		Git git = Git.open(localRepoFolder);
 		File localRepoFolder;
 		localRepoFolder = new File(PATH);
-		Iterable<RevCommit> commits = this.git.log().call();
+		Iterable<RevCommit> commits = git.log().call();
 		
 		Iterator<RevCommit> itr = commits.iterator();
 		while (itr.hasNext()) {
