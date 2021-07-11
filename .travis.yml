@@ -13,4 +13,5 @@ addons:
 
 script: 
     
-    - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=IlConteCvma_Deliverable1
+    - ant build
+    - sonar-scanner
