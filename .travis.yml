@@ -8,11 +8,11 @@ jdk:
 addons: 
     sonarcloud: 
         organization: ilcontecvma
-        sonar.projectKey: IlConteCvma_Deliverable1
+     
         token: 
             9475e750a99bc02e9099f01f6dbd282bd005c1d1
 
 script: 
     
-    - ant build
-    - sonar-scanner
+    - ant build 
+    - sonar-scanner -Dsonar.projectKey=IlConteCvma_Deliverable1
