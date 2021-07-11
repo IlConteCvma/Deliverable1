@@ -28,7 +28,7 @@ public class FirstDeliverable {
 	private static FileWriter fileWriter;
 	private static final String PROJNAME ="STDCXX";
 	private static final Integer STEP = 1000;
-	private static final String path = "local path of STDCXX";
+	private static final String PATH = "local path of STDCXX";
 	
 	private static String readAll(Reader rd) throws IOException {
 	      StringBuilder sb = new StringBuilder();
@@ -74,7 +74,7 @@ public class FirstDeliverable {
 
 				//put key and date into the map
 				if(checkCommit(key))
-				tickets.put(key, truncateDate);
+					tickets.put(key, truncateDate);
 				
 			}
 			
@@ -139,10 +139,9 @@ public class FirstDeliverable {
 	}
 	
 	private static  boolean checkCommit(String ticket) throws GitAPIException {
-		Git git;
+		Git git = Git.open(localRepoFolder);
 		File localRepoFolder;
-		localRepoFolder = new File(path);
-		git = Git.open(localRepoFolder);
+		localRepoFolder = new File(PATH);
 		Iterable<RevCommit> commits = this.git.log().call();
 		
 		Iterator<RevCommit> itr = commits.iterator();
